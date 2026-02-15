@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied - Spring Security Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .error-container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 6em;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #fc4a1a;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .message {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .message h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .message p {
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .message code {
+            background: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(252, 74, 26, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #fc4a1a;
+            border: 2px solid #fc4a1a;
+        }
+        
+        .btn-secondary:hover {
+            background: #fc4a1a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">🚫</div>
+        <h1>403</h1>
+        <h2>Access Denied</h2>
+        
+        <div class="message">
+            <h3>⚠️ Insufficient Permissions</h3>
+            <p>
+                You don't have the required permissions to access this resource.
+                This page requires <code>ADMIN</code> role, but you only have <code>USER</code> role.
+            </p>
+        </div>
+        
+        <div class="user-info" th:if="${username}">
+            <p><strong>Current User:</strong> <span th:text="${username}">User</span></p>
+            <p style="margin-top: 10px;">
+                <strong>Suggestion:</strong> Log in with an account that has ADMIN privileges.
+            </p>
+        </div>
+        
+        <div style="background: #e7f3ff; padding: 20px; border-radius: 15px; margin: 20px 0;">
+            <h3 style="color: #004085; margin-bottom: 10px;">💡 Learning Point</h3>
+            <p style="color: #004085; text-align: left; line-height: 1.6;">
+                <strong>401 vs 403:</strong><br>
+                • <code>401 Unauthorized</code> - Not authenticated (not logged in)<br>
+                • <code>403 Forbidden</code> - Authenticated but not authorized (logged in, wrong role)
+            </p>
+            <p style="color: #004085; text-align: left; margin-top: 15px;">
+                You're seeing 403 because you ARE logged in, but don't have the ADMIN role.
+            </p>
+        </div>
+        
+        <div>
+            <a href="/" class="btn btn-primary">← Go Home</a>
+            <a href="/products" class="btn btn-secondary">View Products</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">Logout & Try Different User</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

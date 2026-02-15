@@ -21,7 +21,7 @@
     <!--  =============================================  -->
     <modules>
         <module>module-1-default-security</module>
-        <!--        <module>module-2-web-security</module>-->
+        <module>module-2-web-security</module>
         <!--        <module>module-3-rest-basic</module>-->
         <!--        <module>module-4-rest-jwt</module>-->
         <!--        <module>module-5-oauth2</module>-->

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Spring Security Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-name {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-size: 1.8em;
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background: #e9ecef;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #495057;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .empty-state h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .api-info {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .api-info h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .api-info code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>🛍️ Products</h1>
+                <p>Module 2 - Web Security Demo</p>
+            </div>
+            <div class="user-info">
+                <p>👤 Logged in as: <strong th:text="${username}">User</strong></p>
+                <p>🔑 Roles: <span th:text="${roles}">USER</span></p>
+                <a href="/" class="btn btn-primary">Home</a>
+                <a href="/admin" class="btn btn-primary" sec:authorize="hasRole('ADMIN')">Admin</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- API Information -->
+        <div class="api-info">
+            <h3>📡 API Endpoints Available</h3>
+            <p>You can interact with products using REST API:</p>
+            <code>GET /api/products - List all products</code>
+            <code>POST /api/products - Create new product (requires CSRF token)</code>
+            <code>GET /api/tags - List all tags</code>
+            <p style="margin-top: 15px;">
+                <strong>Note:</strong> To use the API, you must be authenticated. 
+                Your current session is valid for API calls.
+            </p>
+        </div>
+        
+        <!-- Products Grid -->
+        <div th:if="${#lists.isEmpty(products)}" class="empty-state">
+            <h2>📦 No Products Yet</h2>
+            <p>Start by adding products via the REST API!</p>
+            <p style="margin-top: 20px;">
+                <code>
+                    POST /api/products<br>
+                    Content-Type: application/json<br><br>
+                    {<br>
+                    &nbsp;&nbsp;"name": "Laptop",<br>
+                    &nbsp;&nbsp;"description": "Gaming laptop",<br>
+                    &nbsp;&nbsp;"price": 1299.99<br>
+                    }
+                </code>
+            </p>
+        </div>
+        
+        <div th:unless="${#lists.isEmpty(products)}" class="products-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <h2 class="product-name" th:text="${product.name}">Product Name</h2>
+                <p class="product-description" th:text="${product.description}">Description</p>
+                <div class="product-price">$<span th:text="${product.price}">0.00</span></div>
+                
+                <div class="product-tags" th:if="${product.tags != null and !#lists.isEmpty(product.tags)}">
+                    <span th:each="tag : ${product.tags}" class="tag" th:text="${tag.name}">Tag</span>
+                </div>
+                
+                <small style="color: #999;">
+                    Created: <span th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd HH:mm')}">Date</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

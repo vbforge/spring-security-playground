@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Spring Security Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #f5576c;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .welcome {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.2);
+        }
+        
+        .feature-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #f5576c;
+            border: 2px solid #f5576c;
+        }
+        
+        .btn-secondary:hover {
+            background: #f5576c;
+            color: white;
+        }
+        
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>👑 Admin Panel</h1>
+        <p class="subtitle">You have ADMIN privileges</p>
+        
+        <div class="welcome">
+            <h2>Welcome, Administrator!</h2>
+            <p th:text="'Logged in as: ' + ${username}">User</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>⚠️ Access Control Demo</h3>
+            <p>
+                This page is protected by <code>@PreAuthorize("hasRole('ADMIN')")</code>.
+                Only users with ADMIN role can access this page.
+            </p>
+            <p style="margin-top: 10px;">
+                Try logging in as <strong>user/password</strong> (USER role) - 
+                you'll get a 403 Access Denied error!
+            </p>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">👥</div>
+                <h3>User Management</h3>
+                <p>Manage system users</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">⚙️</div>
+                <h3>System Settings</h3>
+                <p>Configure application</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>Analytics</h3>
+                <p>View system metrics</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Security</h3>
+                <p>Security configurations</p>
+            </div>
+        </div>
+        
+        <div style="background: #e7f3ff; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+            <h3 style="color: #004085; margin-bottom: 10px;">📝 Implementation Note</h3>
+            <p>In the security configuration:</p>
+            <code style="background: white; padding: 10px; display: block; margin: 10px 0; border-radius: 5px;">
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+            </code>
+            <p>This ensures only ADMIN users can access /admin/** paths.</p>
+        </div>
+        
+        <div class="buttons">
+            <a href="/" class="btn btn-secondary">← Home</a>
+            <a href="/products" class="btn btn-secondary">Products</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-primary">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
