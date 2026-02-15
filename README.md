@@ -95,6 +95,7 @@ exit;
 spring-security-playground/
 │
 ├── README.md                          # ← You are here
+├── SETUP.md                           # Project setup instructions
 ├── .env                               # NOT tracked by Git
 ├── .gitignore                         # Defines files excluded from version control
 ├── pom.xml                            # Parent POM
