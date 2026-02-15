@@ -1,0 +1,67 @@
+# ==========================================
+# Module 4 - REST + JWT Configuration
+# ==========================================
+
+# Application Name
+spring.application.name=module-4-rest-jwt
+
+# Server Port
+server.port=8084
+
+# ==========================================
+# MySQL Database Configuration
+# CHANGE THESE VALUES FOR YOUR ENVIRONMENT!
+# ==========================================
+spring.datasource.url=jdbc:mysql://localhost:3306/security_playground_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+spring.datasource.username=${DB_USERNAME:dev_user}
+spring.datasource.password=${DB_PASSWORD:dev_password}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# ==========================================
+# JPA / Hibernate Configuration
+# ==========================================
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.open-in-view=false
+
+# ==========================================
+# JWT Configuration
+# CRITICAL: Generate your own secret key!
+# Generate with: echo -n "your-secret-key-at-least-256-bits" | base64
+# ==========================================
+jwt.secret=${JWT_SECRET:REPLACE_WITH_YOUR_OWN_SECRET_BASE64_ENCODED}
+
+# JWT token expiration time in milliseconds
+# 86400000 ms = 24 hours
+jwt.expiration=86400000
+
+# ==========================================
+# Logging Configuration
+# ==========================================
+logging.level.root=INFO
+logging.level.com.vbforge.security=DEBUG
+logging.level.org.springframework.security=DEBUG
+logging.level.org.springframework.web=DEBUG
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+
+# ==========================================
+# Spring Security Configuration
+# JWT token-based authentication in JwtSecurityConfig.java
+# ==========================================
+# Stateless (no sessions, no cookies)
+# CSRF disabled (not needed for JWT)
+# Custom JWT authentication filter
+# Login endpoint: POST /auth/login
+# Token format: Authorization: Bearer <token>
+
+# ==========================================
+# SpringDoc OpenAPI (Swagger) Configuration
+# ==========================================
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.enabled=true
+
+# Swagger authentication configuration
+springdoc.swagger-ui.persistAuthorization=true
