@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: keycloak-oauth2
+    environment:
+      # Admin credentials from .env file
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+
+      # Database (embedded H2 for simplicity)
+      KC_DB: dev-file
+
+      # Hostname
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+
+      # HTTP enabled (for development)
+      KC_HTTP_ENABLED: true
+      KC_HEALTH_ENABLED: true
+    ports:
+      - "8080:8080"
+    command:
+      - start-dev
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    networks:
+      - keycloak-network
+
+volumes:
+  keycloak_data:
+
+networks:
+  keycloak-network:
+    driver: bridge
