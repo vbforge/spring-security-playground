@@ -1,0 +1,48 @@
+# ============================================= #
+# Spring Boot Modular Project - .gitattributes
+# ============================================= #
+
+# Auto detect text files and normalize line endings
+* text=auto
+
+# ---- Source Code ----
+*.java text
+*.kt text
+*.xml text
+*.html text
+*.css text
+*.js text
+*.ts text
+*.json text
+*.yml text
+*.yaml text
+*.properties text
+*.sql text
+*.md text
+
+# ---- Scripts ----
+*.sh text eol=lf
+*.bash text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# ---- Docker ----
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+
+# ---- Binary Files ----
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.jar binary
+*.war binary
+*.ear binary
+
+# ---- Prevent diff noise for certain files ----
+*.lock -diff
