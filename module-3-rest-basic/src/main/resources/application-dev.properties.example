@@ -1,0 +1,55 @@
+# ==========================================
+# Module 3 - REST + Basic Auth Configuration
+# ==========================================
+
+# Application Name
+spring.application.name=module-3-rest-basic
+
+# Server Port
+server.port=8083
+
+# ==========================================
+# MySQL Database Configuration
+# ==========================================
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# ==========================================
+# JPA / Hibernate Configuration
+# ==========================================
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.open-in-view=false
+
+# ==========================================
+# Logging Configuration
+# ==========================================
+logging.level.root=INFO
+logging.level.com.vbforge.security=DEBUG
+logging.level.org.springframework.security=DEBUG
+logging.level.org.springframework.web=DEBUG
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+
+# ==========================================
+# Spring Security Configuration
+# Custom stateless REST security in RestSecurityConfig.java
+# ==========================================
+# HTTP Basic authentication
+# Stateless (no sessions, no cookies)
+# CSRF disabled (not needed for stateless APIs)
+# Custom 401/403 JSON responses
+# In-memory users: user/password (USER), admin/admin (ADMIN)
+
+# ==========================================
+# SpringDoc OpenAPI (Swagger) Configuration
+# ==========================================
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.enabled=true
+
+# Swagger authentication configuration
+springdoc.swagger-ui.persistAuthorization=true

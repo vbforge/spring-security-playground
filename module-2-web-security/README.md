@@ -368,15 +368,15 @@ module-2-web-security/
 │       └── DuplicateResourceException.java
 │
 ├── src/main/resources/
-│   ├── application.properties            # Base configuration; defines active Spring profile (dev/test/prod)
-│   ├── application-dev.properties        # Development profile settings (e.g., local DB connection, debug options)
-│   ├── application.properties.example    # Configuration template; copy & rename for local setup
-│   └── templates/                        # ⭐ Thymeleaf view templates
-│       ├── home.html                     # Public landing page
-│       ├── login.html                    # Custom authentication (login) page
-│       ├── products.html                 # Secured products listing (authentication required)
-│       ├── admin.html                    # Admin dashboard (ROLE_ADMIN only)
-│       └── access-denied.html            # 403 – Access Denied error page
+│   ├── application.properties                # Base configuration; defines active Spring profile (dev/test/prod)
+│   ├── application-dev.properties            # Development profile settings (e.g., local DB connection, debug options)
+│   ├── application-dev.properties.example    # Configuration template; copy & rename for local setup
+│   └── templates/                            # ⭐ Thymeleaf view templates
+│       ├── home.html                         # Public landing page
+│       ├── login.html                        # Custom authentication (login) page
+│       ├── products.html                     # Secured products listing (authentication required)
+│       ├── admin.html                        # Admin dashboard (ROLE_ADMIN only)
+│       └── access-denied.html                # 403 – Access Denied error page
 │
 └── src/test/
     ├── java/.../

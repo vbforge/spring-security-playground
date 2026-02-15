@@ -202,9 +202,9 @@ module-1-default-security/
 │       └── DuplicateResourceException.java
 │
 ├── src/main/resources/
-│   ├── application.properties              # Controls active profile (dev/test/prod)
-│   ├── application-dev.properties          # Development profile configuration, local database connection settings
-│   └── application.properties.example      # Template configuration file, copy this to create local config
+│   ├── application.properties                  # Controls active profile (dev/test/prod)
+│   ├── application-dev.properties              # Development profile configuration, local database connection settings
+│   └── application-dev.properties.example      # Template configuration file, copy this to create local config
 │
 └── src/test/
     ├── java/.../
